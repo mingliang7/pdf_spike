@@ -1,0 +1,10 @@
+<%= form_for root_path, method: 'get' do %>
+  <%=text_field_tag :search, params[:search], placeholder: "What are you looking for..?"%>
+  <%= submit_tag 'Search', name: nil%> 
+<% end %>
+
+<% @pdfs.each do |pdf|%>
+  <%= pdf.title%>
+  <%= pdf.text%>
+
+<%end%>
