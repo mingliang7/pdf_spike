@@ -1,0 +1,16 @@
+<%= form_for(@pdf) do |f| %>
+  <p>
+    Title:
+  </p>
+  <p><%= f.text_field :title %></p>
+  <p>
+    Detail:
+  </p>
+  <p><%= f.text_field :detail %></p>
+  <p>
+    File:
+  </p>
+  <p><%= f.file_field :text %></p>
+
+  <%= f.submit %>
+<% end %>

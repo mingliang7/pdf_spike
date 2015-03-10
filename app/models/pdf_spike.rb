@@ -2,21 +2,22 @@ require 'elasticsearch/model'
 
 class PdfSpike < ActiveRecord::Base
   mount_uploader :text, TextUploader
-   include Tire::Model::Search
-   include Tire::Model::Callbacks
-  mapping _source: { excludes: ['attachment'] } do
-    indexes :id, type: 'integer'
-    indexes :title
-    indexes :attachment, type: 'attachment'
-  end
+   include Elasticsearch::Model
+   include Elasticsearch::Model::Callbacks
 
+  settings index: { number_of_shards: 1 } do
+    mappings dynamic: 'true' do
+      indexes :title, analyzer: 'english'
+      indexes :attachment, type: 'attachment'
+    end
+  end
   def attachment
     path_to_attachment = text.file.file
     Base64.encode64(open(path_to_attachment) { |file| file.read })
   end
 
-  def to_indexed_json
-    to_json(methods: [:attachment])
+  def as_indexed_json(options = {})
+    self.as_json(methods: [:attachment])
   end
 
 end

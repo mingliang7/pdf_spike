@@ -2,9 +2,35 @@
   <%=text_field_tag :search, params[:search], placeholder: "What are you looking for..?"%>
   <%= submit_tag 'Search', name: nil%> 
 <% end %>
+<% if params[:search].present?%>
+<% if @pdfs.count > 0 %>
+<table>
+  <tr>
+    <th>
+      title
+    </th>
+    <th>
+      Detail
+    </th>
+    <th>
+      Download
+    </th>
+  </tr>  
+  <tbody>
+    
+      <% @pdfs.each do |pdf|%>
+      <tr>
+      <td><%= pdf.title%></td>
+      <td><%= pdf.detail%></td>
+       <td><%= link_to 'View & Download', pdf.text.url%></td>
+       </tr>
+      <%end%>
+    
+  </tbody>
 
-<% @pdfs.each do |pdf|%>
-  <%= pdf.title%>
-  <%= pdf.text%>
+</table>
+<% elsif @pdfs.count == 0%>
+<h1>Results Not Found</h1>
 
+<%end%>
 <%end%>
