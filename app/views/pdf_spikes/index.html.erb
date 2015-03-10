@@ -1,4 +1,7 @@
 <% @pdfs.each do |pdf| %>
   <h1><%= pdf.title%></h1>
   <p><%= pdf.detail%></p>
+  <%= link_to "Edit", edit_pdf_spike_path(pdf) %>
+  <%= link_to "Show", pdf_spike_path(pdf) %>
+  <%= link_to "Delete", pdf, method: :delete, data: {confirm: "Are you sure?" } %>
 <% end %>
